@@ -18,3 +18,19 @@ cls macro
     mov ax, 03h
     int 10h
 endm
+
+printn macro n
+    mov ax, 0
+    mov al, n
+    div baux
+
+    mov naux[0], al
+    mov naux[1], ah
+    ;48 para que al sumarlo de el ascii, solo es para mostrarlo en 2 digitos
+    add naux[0], 48
+    add naux[1], 48
+
+    lea dx, naux
+    mov ah, 09h
+    int 21h
+endm

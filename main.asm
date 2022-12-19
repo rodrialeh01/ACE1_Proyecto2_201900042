@@ -33,6 +33,9 @@ include macros.asm
     op5                 db 'OPCION 5','$'
     op6                 db 'OPCION 6','$'
     op7                 db 'OPCION 7','$'
+    num                 db 55
+    naux                db 2 dup(' '), '$'
+    baux                db 10
 ;segmento de codigo
 .code 
     main PROC
@@ -104,6 +107,8 @@ include macros.asm
         OPCION1:
             cls
             print op1
+            print ln
+            printn num
             print ln
             getch
             jmp MENU
