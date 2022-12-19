@@ -1,3 +1,4 @@
+include macros.asm
 ;inicio del programa
 .model small
 
@@ -6,6 +7,7 @@
 
 ;segmento de datos
 .data
+    ln                  db 0ah, '$'
     inicio              db '================== Practica 2 / Proyecto 2 ================','$'
     inicio1             db '= Universidad de San Carlos de Guatemala','$'
     inicio2             db '= Facultad de Ingenieria','$'
@@ -24,56 +26,124 @@
     inicio15            db '= (6) Metodo de Newton','$'
     inicio16            db '= (7) Metodo de Steffensen','$'
     inicio17            db '= (8) Salir de la aplicacion','$'
+    op1                 db 'OPCION 1','$'
+    op2                 db 'OPCION 2','$'
+    op3                 db 'OPCION 3','$'
+    op4                 db 'OPCION 4','$'
+    op5                 db 'OPCION 5','$'
+    op6                 db 'OPCION 6','$'
+    op7                 db 'OPCION 7','$'
 ;segmento de codigo
 .code 
-    .starup
+    main PROC
+        INTRO:
+        cls
+            print inicio
+            print ln
+            print inicio1
+            print ln
+            print inicio2
+            print ln
+            print inicio3
+            print ln
+            print inicio4
+            print ln
+            print inicio5
+            print ln
+            print inicio6
+            print ln
+            print inicio7
+            print ln
+            print inicio8
+            print ln
+            getch
+            jmp MENU
         MENU:
-            mov ah, 0FH
-            int 10h
-            mov ah, 0
-            int 10h
-
-            mov bh, 0
-            mov dh, 1
-            mov d1, 10
-            mov ah,2
-            int 10h
-
-            lea dx, inicio
-            mov ah, 9
-            int 21h
-            
-            lea dx , inicio1
-            mov ah, 9
-            int 21h
-
-            lea dx , inicio2
-            mov ah, 9
-            int 21h
-
-            lea dx , inicio3
-            mov ah, 9
-            int 21h
-
-            lea dx , inicio4
-            mov ah, 9
-            int 21h
-
-            lea dx , inicio5
-            mov ah, 9
-            int 21h
-
-            lea dx , inicio6
-            mov ah, 9
-            int 21h
-
-            lea dx , inicio7
-            mov ah, 9
-            int 21h
-
-            lea dx , inicio8
-            mov ah, 9
-            int 21h
-            
+            cls
+            print inicio9
+            print ln
+            print inicio10
+            print ln
+            print inicio11
+            print ln
+            print inicio12
+            print ln
+            print inicio13
+            print ln
+            print inicio14
+            print ln
+            print inicio15
+            print ln
+            print inicio16
+            print ln
+            print inicio17
+            print ln
+            getch
+            ;comparacion de la tecla presionada con ascci o con la letra a comparar
+            cmp al, 49
+            ;jump equal
+            je OPCION1
+            ;jne jump no equal es else
+            ;jz = jump zero = si es 0 para comparar si ambos son iguales
+            cmp al, 50
+            je OPCION2
+            cmp al, 51
+            je OPCION3
+            cmp al, 52
+            je OPCION4
+            cmp al, 53
+            je OPCION5
+            cmp al, 54
+            je OPCION6
+            cmp al, 55
+            je OPCION7
+            cmp al, 27
+            je SALIR
+            cmp al, 56
+            je SALIR
+        OPCION1:
+            cls
+            print op1
+            print ln
+            getch
+            jmp MENU
+        OPCION2:
+            cls
+            print op2
+            print ln
+            getch
+            jmp MENU
+        OPCION3:
+            cls
+            print op3
+            print ln
+            getch
+            jmp MENU
+        OPCION4:
+            cls
+            print op4
+            print ln
+            getch
+            jmp MENU
+        OPCION5:
+            cls
+            print op5
+            print ln
+            getch
+            jmp MENU
+        OPCION6:
+            cls
+            print op6
+            print ln
+            getch
+            jmp MENU
+        OPCION7:
+            cls
+            print op7
+            print ln
+            getch
+            jmp MENU
+        SALIR:
             .exit
-END
+    main ENDP
+end main
