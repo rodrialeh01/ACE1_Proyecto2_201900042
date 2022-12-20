@@ -36,6 +36,13 @@ include macros.asm
     num                 db 55
     naux                db 2 dup(' '), '$'
     baux                db 10
+    ins1                db '¿Cuál es el máximo exponente de la función?','$'
+    exp5                db 'Ingrese el coeficiente del valor x5','$'
+    exp4                db 'Ingrese el coeficiente del valor x4','$'
+    exp3                db 'Ingrese el coeficiente del valor x3','$'
+    exp2                db 'Ingrese el coeficiente del valor x2','$'
+    exp1                db 'Ingrese el coeficiente del valor x1','$'
+    exp0                db 'Ingrese el coeficiente del valor x0','$'
 ;segmento de codigo
 .code 
     main PROC
@@ -108,9 +115,21 @@ include macros.asm
             cls
             print op1
             print ln
-            printn num
+            print ins1
             print ln
             getch
+            cmp al, 53
+            je EXP5
+            cmp al, 52
+            je EXP4
+            cmp al, 51
+            je EXP3
+            cmp al, 50
+            je EXP2
+            cmp al, 49
+            je EXP1
+            cmp al, 48
+            je EXP0
             jmp MENU
         OPCION2:
             cls
@@ -145,6 +164,87 @@ include macros.asm
         OPCION7:
             cls
             print op7
+            print ln
+            getch
+            jmp MENU
+        EXP5:
+            cls
+            print exp5
+            print ln
+            getch
+            print exp4
+            print ln
+            getch
+            print exp3
+            print ln
+            getch
+            print exp2
+            print ln
+            getch
+            print exp1
+            print ln
+            getch
+            print exp0
+            print ln
+            getch
+            jmp MENU
+        EXP4:
+            cls
+            print exp4
+            print ln
+            getch
+            print exp3
+            print ln
+            getch
+            print exp2
+            print ln
+            getch
+            print exp1
+            print ln
+            getch
+            print exp0
+            print ln
+            getch
+            jmp MENU
+        EXP3:
+            cls
+            print exp3
+            print ln
+            getch
+            print exp2
+            print ln
+            getch
+            print exp1
+            print ln
+            getch
+            print exp0
+            print ln
+            getch
+            jmp MENU
+        EXP2:
+            cls
+            print exp2
+            print ln
+            getch
+            print exp1
+            print ln
+            getch
+            print exp0
+            print ln
+            getch
+            jmp MENU
+        EXP1:
+            cls
+            print exp1
+            print ln
+            getch
+            print exp0
+            print ln
+            getch
+            jmp MENU
+        EXP0:
+            cls
+            print exp0
             print ln
             getch
             jmp MENU

@@ -1,3 +1,4 @@
+;macro para imprimir en pantalla
 print macro txt
     ; carga en memoria las variables del semento de datos
     mov ax, @data
@@ -8,17 +9,17 @@ print macro txt
     lea dx, txt
     int 21h
 endm
-
+;macro para obtener un dato
 getch macro
     mov ah, 01h
     int 21h
 endm
-
+;macro para limpiar la pantalla
 cls macro
     mov ax, 03h
     int 10h
 endm
-
+;macro para imprimir un numero
 printn macro n
     mov ax, 0
     mov al, n
