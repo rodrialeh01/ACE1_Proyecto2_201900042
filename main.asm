@@ -72,6 +72,12 @@ include macros.asm
     x1                  db 'x ','$'
     mas                 db '+ ','$'
     menos               db '- ','$'
+
+textaux label byte
+    maxtextaux          db 4
+    longtextaux         db ?
+    numtextaux          db 4 dup('0'),'$'
+
 ;segmento de codigo
 .code 
     main PROC
@@ -98,6 +104,7 @@ include macros.asm
             getch
             jmp MENU
         MENU:
+            cls
             print inicio9
             print ln
             print inicio10
@@ -139,7 +146,8 @@ include macros.asm
             je SALIR
             cmp al, 56
             je SALIR
-            jne MENU
+            print ln
+            jmp MENU
         OPCION1:
             cls
             print op1
@@ -183,136 +191,41 @@ include macros.asm
             cmp dl, 48
             je OPT0
         OPT5:
-
             ; Captura el numero ingresado de dos digitos
             print exp5
             print ln
             ; captura numero de dos digitos
-            ;mov ah, 01h
-            ;int 21h
-            ;sub al, 30h
-
-            ;mov ah, 01h
-            ;int 21h
-            ;sub al, 30h
-            ;mov unidades, al
-
-            ;mov al, decenas
-            ;mov bl, 10
-            ;mul bl
-            ;add al, unidades
-            ;mov coef5, al
-
+            getNumero coef5
             print ln
             
             print exp4
             print ln
 
-            ; captura numero de dos digitos
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov decenas, al
-
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov unidades, al
-
-            mov al, decenas
-            mov bl, 10
-            mul bl
-            add al, unidades
-            mov coef4, al
-
+            getNumero coef4
             print ln
             
             print exp3
             print ln
 
-            ; captura numero de dos digitos
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov decenas, al
-
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov unidades, al
-
-            mov al, decenas
-            mov bl, 10
-            mul bl
-            add al, unidades
-            mov coef3, al
-
+            getNumero coef3
             print ln
             
             print exp2
             print ln
 
-            ; captura numero de dos digitos
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov decenas, al
-
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov unidades, al
-
-            mov al, decenas
-            mov bl, 10
-            mul bl
-            add al, unidades
-            mov coef2, al
-
+            getNumero coef2
             print ln
             
             print exp1
             print ln
 
-            ; captura numero de dos digitos
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov decenas, al
-
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov unidades, al
-
-            mov al, decenas
-            mov bl, 10
-            mul bl
-            add al, unidades
-            mov coef1, al
-
+            getNumero coef1
             print ln
             
             print exp0
             print ln
 
-            ; captura numero de dos digitos
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov decenas, al
-
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov unidades, al
-
-            mov al, decenas
-            mov bl, 10
-            mul bl
-            add al, unidades
-            mov coef0, al
-
+            getNumero coef0
             print ln
             print msg
             printn coef5
@@ -332,6 +245,7 @@ include macros.asm
             print mas
             printnum coef0
             print ln
+            getch
             jmp MENU
         OPT4:
             print exp4

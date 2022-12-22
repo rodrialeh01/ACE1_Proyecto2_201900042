@@ -9,7 +9,7 @@ print macro txt
     lea dx, txt
     int 21h
 endm
-;macro para obtener un dato
+;macro para hacer una pausa
 getch macro
     mov ah, 01h
     int 21h
@@ -37,7 +37,7 @@ printn macro n
     mov ah, 09h
     int 21h
 endm
-
+;imprime los numeros
 printnum macro num 
     mov al, num
     AAM
@@ -51,4 +51,49 @@ printnum macro num
     mov dl,bl
     add dl, 30h
     int 21h 
+endm
+;obtiene el texto del numero ingresado por el usuario
+getNumero macro var
+    LOCAL n1,n2,salir
+    limpiarNumero numtextaux
+    mov ah, 0ah
+    lea dx, textaux
+    int 21h
+    cmp longtextaux,1
+    je n1
+    cmp longtextaux,2
+    je n2
+    n1:
+        mov al,numtextaux
+        sub al, 30h
+        mov var, al
+        jmp salir
+    n2:
+        mov unidades,0
+        mov decenas,0
+
+        mov al, numtextaux[0]
+        sub al, 30h
+        mov decenas, al
+
+        mov al, numtextaux[1]
+        sub al, 30h
+        mov unidades, al
+
+        mov al, decenas
+        mov bl, 10
+        mul bl
+        add al, unidades
+        mov var, al
+    salir:
+endm
+;limpia la variable de texto
+limpiarNumero macro text
+    LOCAL repetir
+    xor bx, bx
+    mov cx, lengthof text
+    repetir:
+        mov text[bx], '$'
+        inc bx
+    loop repetir
 endm
