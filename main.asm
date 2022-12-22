@@ -7,6 +7,7 @@ include macros.asm
 
 ;segmento de datos
 .data
+    ; 0dh = \n y 0ah = \r
     ln                  db 0ah, '$'
     inicio              db '================== Practica 2 / Proyecto 2 ================','$'
     inicio1             db '= Universidad de San Carlos de Guatemala','$'
@@ -34,20 +35,48 @@ include macros.asm
     op6                 db 'OPCION 6','$'
     op7                 db 'OPCION 7','$'
     num                 db 55
-    naux                db 2 dup(' '), '$'
+    naux                db 2 dup('0'), '$'
     baux                db 10
-    ins1                db '¿Cuál es el máximo exponente de la función?','$'
-    exp5                db 'Ingrese el coeficiente del valor x5','$'
-    exp4                db 'Ingrese el coeficiente del valor x4','$'
-    exp3                db 'Ingrese el coeficiente del valor x3','$'
-    exp2                db 'Ingrese el coeficiente del valor x2','$'
-    exp1                db 'Ingrese el coeficiente del valor x1','$'
-    exp0                db 'Ingrese el coeficiente del valor x0','$'
+    ins1                db '¿Cual es el maximo exponente de la funcion?','$'
+    exp5                db 'Ingrese el coeficiente del valor x^5','$'
+    exp4                db 'Ingrese el coeficiente del valor x^4','$'
+    exp3                db 'Ingrese el coeficiente del valor x^3','$'
+    exp2                db 'Ingrese el coeficiente del valor x^2','$'
+    exp1                db 'Ingrese el coeficiente del valor x^1','$'
+    exp0                db 'Ingrese el coeficiente del valor x^0','$'
+    numero              db ?
+    unidades            db 0
+    decenas             db 0
+    coef5               db 5
+    coef4               db 4
+    coef3               db 3
+    coef2               db 2
+    coef1               db 1
+    coef0               db 0 
+    der5                db 0
+    der4                db 0
+    der3                db 0
+    der2                db 0
+    der1                db 0
+    int5                db 0
+    int4                db 0
+    int3                db 0
+    int2                db 0
+    int1                db 0
+    int0                db 0
+    msg                 db 'La funcion ingresada es: ', '$'
+    x5                  db 'x^5 ','$'  
+    x4                  db 'x^4 ','$'
+    x3                  db 'x^3 ','$'
+    x2                  db 'x^2 ','$'
+    x1                  db 'x ','$'
+    mas                 db '+ ','$'
+    menos               db '- ','$'
 ;segmento de codigo
 .code 
     main PROC
         INTRO:
-        cls
+            cls
             print inicio
             print ln
             print inicio1
@@ -69,7 +98,6 @@ include macros.asm
             getch
             jmp MENU
         MENU:
-            cls
             print inicio9
             print ln
             print inicio10
@@ -111,25 +139,575 @@ include macros.asm
             je SALIR
             cmp al, 56
             je SALIR
+            jne MENU
         OPCION1:
             cls
             print op1
             print ln
-            print ins1
+            mov ax, seg @data
+            mov ds, ax
+            ; IMPRIME LA PREGUNTA
+            mov ah, 09h
+            lea dx, ins1
+            int 21h
+            ; Captura el numero ingresado
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov num, al
+
             print ln
-            getch
-            cmp al, 53
-            je EXP5
-            cmp al, 52
-            je EXP4
-            cmp al, 51
-            je EXP3
-            cmp al, 50
-            je EXP2
-            cmp al, 49
-            je EXP1
-            cmp al, 48
-            je EXP0
+            ;imprime el numero capturado
+            mov ah, 02h
+            mov dl, num
+            add dl, 30h
+            int 21h
+
+            print ln
+            ;compara si es exponente 5 se va a la opcion 5
+            cmp dl, 53
+            je OPT5
+            ;compara si es exponente 4 se va a la opcion 4
+            cmp dl, 52
+            je OPT4
+            ;compara si es exponente 3 se va a la opcion 3
+            cmp dl, 51
+            je OPT3
+            ;compara si es exponente 2 se va a la opcion 2
+            cmp dl, 50
+            je OPT2
+            ;compara si es exponente 1 se va a la opcion 1
+            cmp dl, 49
+            je OPT1
+            ;compara si es exponente 0 se va a la opcion 0
+            cmp dl, 48
+            je OPT0
+        OPT5:
+
+            ; Captura el numero ingresado de dos digitos
+            print exp5
+            print ln
+            ; captura numero de dos digitos
+            ;mov ah, 01h
+            ;int 21h
+            ;sub al, 30h
+
+            ;mov ah, 01h
+            ;int 21h
+            ;sub al, 30h
+            ;mov unidades, al
+
+            ;mov al, decenas
+            ;mov bl, 10
+            ;mul bl
+            ;add al, unidades
+            ;mov coef5, al
+
+            print ln
+            
+            print exp4
+            print ln
+
+            ; captura numero de dos digitos
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov decenas, al
+
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov unidades, al
+
+            mov al, decenas
+            mov bl, 10
+            mul bl
+            add al, unidades
+            mov coef4, al
+
+            print ln
+            
+            print exp3
+            print ln
+
+            ; captura numero de dos digitos
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov decenas, al
+
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov unidades, al
+
+            mov al, decenas
+            mov bl, 10
+            mul bl
+            add al, unidades
+            mov coef3, al
+
+            print ln
+            
+            print exp2
+            print ln
+
+            ; captura numero de dos digitos
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov decenas, al
+
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov unidades, al
+
+            mov al, decenas
+            mov bl, 10
+            mul bl
+            add al, unidades
+            mov coef2, al
+
+            print ln
+            
+            print exp1
+            print ln
+
+            ; captura numero de dos digitos
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov decenas, al
+
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov unidades, al
+
+            mov al, decenas
+            mov bl, 10
+            mul bl
+            add al, unidades
+            mov coef1, al
+
+            print ln
+            
+            print exp0
+            print ln
+
+            ; captura numero de dos digitos
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov decenas, al
+
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov unidades, al
+
+            mov al, decenas
+            mov bl, 10
+            mul bl
+            add al, unidades
+            mov coef0, al
+
+            print ln
+            print msg
+            printn coef5
+            print x5
+            print mas
+            printn coef4
+            print x4
+            print mas
+            printn coef3
+            print x3
+            print mas
+            printn coef2
+            print x2
+            print mas
+            printnum coef1
+            print x1
+            print mas
+            printnum coef0
+            print ln
+            jmp MENU
+        OPT4:
+            print exp4
+            print ln
+
+            ; captura numero de dos digitos
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov decenas, al
+
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov unidades, al
+
+            mov al, decenas
+            mov bl, 10
+            mul bl
+            add al, unidades
+            mov coef4, al
+
+            print ln
+            
+            print exp3
+            print ln
+
+            ; captura numero de dos digitos
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov decenas, al
+
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov unidades, al
+
+            mov al, decenas
+            mov bl, 10
+            mul bl
+            add al, unidades
+            mov coef3, al
+
+            print ln
+            
+            print exp2
+            print ln
+
+            ; captura numero de dos digitos
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov decenas, al
+
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov unidades, al
+
+            mov al, decenas
+            mov bl, 10
+            mul bl
+            add al, unidades
+            mov coef2, al
+
+            print ln
+            
+            print exp1
+            print ln
+
+            ; captura numero de dos digitos
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov decenas, al
+
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov unidades, al
+
+            mov al, decenas
+            mov bl, 10
+            mul bl
+            add al, unidades
+            mov coef1, al
+
+            print ln
+            
+            print exp0
+            print ln
+
+            ; captura numero de dos digitos
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov decenas, al
+
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov unidades, al
+
+            mov al, decenas
+            mov bl, 10
+            mul bl
+            add al, unidades
+            mov coef0, al
+
+            print ln
+            print msg
+            printnum coef4
+            print x4
+            print mas
+            printnum coef3
+            print x3
+            print mas
+            printnum coef2
+            print x2
+            print mas
+            printnum coef1
+            print x1
+            print mas
+            printnum coef0
+            print ln
+            jmp MENU 
+        OPT3:
+            print exp3
+            print ln
+
+            ; captura numero de dos digitos
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov decenas, al
+
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov unidades, al
+
+            mov al, decenas
+            mov bl, 10
+            mul bl
+            add al, unidades
+            mov coef3, al
+
+            print ln
+            
+            print exp2
+            print ln
+
+            ; captura numero de dos digitos
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov decenas, al
+
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov unidades, al
+
+            mov al, decenas
+            mov bl, 10
+            mul bl
+            add al, unidades
+            mov coef2, al
+
+            print ln
+            
+            print exp1
+            print ln
+
+            ; captura numero de dos digitos
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov decenas, al
+
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov unidades, al
+
+            mov al, decenas
+            mov bl, 10
+            mul bl
+            add al, unidades
+            mov coef1, al
+
+            print ln
+            
+            print exp0
+            print ln
+
+            ; captura numero de dos digitos
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov decenas, al
+
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov unidades, al
+
+            mov al, decenas
+            mov bl, 10
+            mul bl
+            add al, unidades
+            mov coef0, al
+
+            print ln
+            printnum coef3
+            print x3
+            print mas
+            printnum coef2
+            print x2
+            print mas
+            printnum coef1
+            print x1
+            print mas
+            printnum coef0
+            print ln
+            jmp MENU
+        OPT2:
+            print exp2
+            print ln
+
+            ; captura numero de dos digitos
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov decenas, al
+
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov unidades, al
+
+            mov al, decenas
+            mov bl, 10
+            mul bl
+            add al, unidades
+            mov coef2, al
+
+            print ln
+            
+            print exp1
+            print ln
+
+            ; captura numero de dos digitos
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov decenas, al
+
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov unidades, al
+
+            mov al, decenas
+            mov bl, 10
+            mul bl
+            add al, unidades
+            mov coef1, al
+
+            print ln
+            
+            print exp0
+            print ln
+
+            ; captura numero de dos digitos
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov decenas, al
+
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov unidades, al
+
+            mov al, decenas
+            mov bl, 10
+            mul bl
+            add al, unidades
+            mov coef0, al
+
+            print ln
+            printnum coef2
+            print x2
+            print mas
+            printnum coef1
+            print x1
+            print mas
+            printnum coef0
+            print ln
+            jmp MENU
+        OPT1:
+            print exp1
+            print ln
+
+            ; captura numero de dos digitos
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov decenas, al
+
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov unidades, al
+
+            mov al, decenas
+            mov bl, 10
+            mul bl
+            add al, unidades
+            mov coef1, al
+
+            print ln
+            
+            print exp0
+            print ln
+
+            ; captura numero de dos digitos
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov decenas, al
+
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov unidades, al
+
+            mov al, decenas
+            mov bl, 10
+            mul bl
+            add al, unidades
+            mov coef0, al
+
+            print ln
+            printnum coef1
+            print x1
+            print mas
+            printnum coef0
+            print ln
+            jmp MENU
+        OPT0:
+            print exp0
+            print ln
+
+            ; captura numero de dos digitos
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov decenas, al
+
+            mov ah, 01h
+            int 21h
+            sub al, 30h
+            mov unidades, al
+
+            mov al, decenas
+            mov bl, 10
+            mul bl
+            add al, unidades
+            mov coef0, al
+
+            print ln
+            printnum coef0
+            print ln
             jmp MENU
         OPCION2:
             cls
@@ -164,87 +742,6 @@ include macros.asm
         OPCION7:
             cls
             print op7
-            print ln
-            getch
-            jmp MENU
-        EXP5:
-            cls
-            print exp5
-            print ln
-            getch
-            print exp4
-            print ln
-            getch
-            print exp3
-            print ln
-            getch
-            print exp2
-            print ln
-            getch
-            print exp1
-            print ln
-            getch
-            print exp0
-            print ln
-            getch
-            jmp MENU
-        EXP4:
-            cls
-            print exp4
-            print ln
-            getch
-            print exp3
-            print ln
-            getch
-            print exp2
-            print ln
-            getch
-            print exp1
-            print ln
-            getch
-            print exp0
-            print ln
-            getch
-            jmp MENU
-        EXP3:
-            cls
-            print exp3
-            print ln
-            getch
-            print exp2
-            print ln
-            getch
-            print exp1
-            print ln
-            getch
-            print exp0
-            print ln
-            getch
-            jmp MENU
-        EXP2:
-            cls
-            print exp2
-            print ln
-            getch
-            print exp1
-            print ln
-            getch
-            print exp0
-            print ln
-            getch
-            jmp MENU
-        EXP1:
-            cls
-            print exp1
-            print ln
-            getch
-            print exp0
-            print ln
-            getch
-            jmp MENU
-        EXP0:
-            cls
-            print exp0
             print ln
             getch
             jmp MENU

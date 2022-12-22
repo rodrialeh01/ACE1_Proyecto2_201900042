@@ -1,6 +1,6 @@
 ;macro para imprimir en pantalla
 print macro txt
-    ; carga en memoria las variables del semento de datos
+    ; carga en memoria las variables del segmento de datos
     mov ax, @data
     mov ds, ax
 
@@ -25,6 +25,8 @@ printn macro n
     mov al, n
     div baux
 
+    mov naux[0], '0'
+    mov naux[1], '0'
     mov naux[0], al
     mov naux[1], ah
     ;48 para que al sumarlo de el ascii, solo es para mostrarlo en 2 digitos
@@ -34,4 +36,19 @@ printn macro n
     lea dx, naux
     mov ah, 09h
     int 21h
+endm
+
+printnum macro num 
+    mov al, num
+    AAM
+    mov bx,ax
+    mov ah, 02h
+    mov dl,bh
+    add dl, 30h
+    int 21h
+
+    mov ah, 02h
+    mov dl,bl
+    add dl, 30h
+    int 21h 
 endm
