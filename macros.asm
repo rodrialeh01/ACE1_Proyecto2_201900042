@@ -115,3 +115,159 @@ dividir macro coefi, expo, total
     mov ax, 0000h
     mov al, bl
 endm
+
+printFunc macro c5, c4, c3, c2, c1, c0
+    LOCAL COF5,COF4,COF3,COF2,COF1,COF0,PR5,PR4,PR3,PR2,PR1,PR0,salir
+    print msg
+    cmp c5 , 0
+    je COF4
+    jne COF5
+    COF5:
+        cmp c5 , 0
+        je COF4
+        jne PR5
+    PR5:
+        printn c5
+        print x5
+        print mas
+    COF4:
+        cmp c4, 0
+        je COF3
+        jne PR4
+    PR4:
+        printn c4
+        print x4
+        print mas
+    COF3:
+        cmp c3, 0
+        je COF2
+        jne PR3
+    PR3:
+        printn c3
+        print x3
+        print mas
+    COF2:
+        cmp c2, 0
+        je COF1
+        jne PR2
+    PR2:
+        printn c2
+        print x2
+        print mas
+    COF1:
+        cmp c1, 0
+        je COF0
+        jne PR1
+    PR1:
+        printn c1
+        print x1
+        print mas
+    COF0:
+        printn c0
+    salir:
+
+    print ln
+endm
+
+printDerivada macro c4, c3, c2, c1, c0
+    LOCAL COF4,COF3,COF2,COF1,COF0,PR4,PR3,PR2,PR1,PR0,salir
+    print msgDerivada
+    print ln
+    cmp c4 , 0
+    je COF3
+    jne COF4
+    COF4:
+        cmp c4, 0
+        je COF3
+        jne PR4
+    PR4:
+        printn c4
+        print x4
+        print mas
+    COF3:
+        cmp c3, 0
+        je COF2
+        jne PR3
+    PR3:
+        printn c3
+        print x3
+        print mas
+    COF2:
+        cmp c2, 0
+        je COF1
+        jne PR2
+    PR2:
+        printn c2
+        print x2
+        print mas
+    COF1:
+        cmp c1, 0
+        je COF0
+        jne PR1
+    PR1:
+        printn c1
+        print x1
+        print mas
+    COF0:
+        printn c0
+    salir:
+
+    print ln
+endm
+
+printIntegral macro c5, c4, c3, c2, c1, c0
+    LOCAL COF5,COF4,COF3,COF2,COF1,COF0,PR5,PR4,PR3,PR2,PR1,PR0,salir
+    print msgIntegral
+    print ln
+    cmp c5 , 0
+    je COF4
+    jne COF5
+    COF5:
+        cmp c5 , 0
+        je COF4
+        jne PR5
+    PR5:
+        printn c5
+        print x6
+        print mas
+    COF4:
+        cmp c4, 0
+        je COF3
+        jne PR4
+    PR4:
+        printn c4
+        print x5
+        print mas
+    COF3:
+        cmp c3, 0
+        je COF2
+        jne PR3
+    PR3:
+        printn c3
+        print x4
+        print mas
+    COF2:
+        cmp c2, 0
+        je COF1
+        jne PR2
+    PR2:
+        printn c2
+        print x3
+        print mas
+    COF1:
+        cmp c1, 0
+        je COF0
+        jne PR1
+    PR1:
+        printn c1
+        print x2
+        print mas
+    COF0:
+        printn c0
+        print x1
+        print mas
+    salir:
+    
+    print constant
+    print ln
+endm

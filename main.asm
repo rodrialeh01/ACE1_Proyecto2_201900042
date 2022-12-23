@@ -29,10 +29,6 @@ include macros.asm
     inicio15            db '= (6) Metodo de Newton','$'
     inicio16            db '= (7) Metodo de Steffensen','$'
     inicio17            db '= (8) Salir de la aplicacion','$'
-    op1                 db 'OPCION 1','$'
-    op2                 db 'OPCION 2','$'
-    op3                 db 'OPCION 3','$'
-    op4                 db 'OPCION 4','$'
     op5                 db 'OPCION 5','$'
     op6                 db 'OPCION 6','$'
     op7                 db 'OPCION 7','$'
@@ -68,9 +64,9 @@ include macros.asm
     int1                db 0
     int0                db 0
     ac                  db 0
-    msg                 db 'La funcion ingresada es: ', '$'
-    msg2                db 'La derivada de la funcion ingresada es: ', '$'
-    msg3                db 'La integral de la funcion ingresada es: ', '$'
+    msg                 db 'f(x) = ', '$'
+    msgDerivada         db 'La derivada de la funcion ingresada es: ', '$'
+    msgIntegral         db 'La integral de la funcion ingresada es: ', '$'
     x6                  db 'x^6 ','$'
     x5                  db 'x^5 ','$'  
     x4                  db 'x^4 ','$'
@@ -177,8 +173,6 @@ textaux label byte
             mov int0, 0
             mov ac, 0
             cls
-            print op1
-            print ln
             ; IMPRIME LA PREGUNTA
             print ins1
             print ln
@@ -257,63 +251,6 @@ textaux label byte
             dividir coef0, 1, int0
             print ln
             
-            print msg
-            printn coef5
-            print x5
-            print mas
-            printn coef4
-            print x4
-            print mas
-            printn coef3
-            print x3
-            print mas
-            printn coef2
-            print x2
-            print mas
-            printnum coef1
-            print x1
-            print mas
-            printnum coef0
-            print ln
-            ;DERIVADA
-            print msg2
-            printn der5
-            print x4
-            print mas
-            printn der4
-            print x3
-            print mas
-            printn der3
-            print x2
-            print mas
-            printn der2
-            print x1
-            print mas
-            printn der1
-            print ln
-            ;INTEGRAL
-            print msg3
-            printn int5
-            print x6
-            print mas
-            printn int4
-            print x5
-            print mas
-            printn int3
-            print x4
-            print mas
-            printn int2
-            print x3
-            print mas
-            printn int1
-            print x2
-            print mas
-            printn int0
-            print x1
-            print mas
-            print constant
-            print ln
-            pausa
             jmp MENU
         OPT4:
             print exp4
@@ -354,23 +291,7 @@ textaux label byte
             getNumero coef0
             dividir coef0, 1, int0
             print ln
-            
-            print msg
-            printn coef4
-            print x4
-            print mas
-            printn coef3
-            print x3
-            print mas
-            printn coef2
-            print x2
-            print mas
-            printnum coef1
-            print x1
-            print mas
-            printnum coef0
-            print ln
-            pausa
+
             jmp MENU 
         OPT3:
             print exp3
@@ -404,19 +325,6 @@ textaux label byte
             dividir coef0, 1, int0
             print ln
             
-            print msg
-            printn coef3
-            print x3
-            print mas
-            printn coef2
-            print x2
-            print mas
-            printnum coef1
-            print x1
-            print mas
-            printnum coef0
-            print ln
-            pausa
             jmp MENU
         OPT2:
             print exp2
@@ -442,16 +350,6 @@ textaux label byte
             dividir coef0, 1, int0
             print ln
             
-            print msg
-            printn coef2
-            print x2
-            print mas
-            printnum coef1
-            print x1
-            print mas
-            printnum coef0
-            print ln
-            pausa
             jmp MENU
         OPT1:
             print exp1
@@ -469,13 +367,6 @@ textaux label byte
             dividir coef0, 1, int0
             print ln
             
-            print msg
-            printnum coef1
-            print x1
-            print mas
-            printnum coef0
-            print ln
-            pausa
             jmp MENU
         OPT0:
             print exp0
@@ -497,20 +388,17 @@ textaux label byte
             jmp MENU
         OPCION2:
             cls
-            print op2
-            print ln
+            printFunc coef5, coef4, coef3, coef2, coef1, coef0
             pausa
             jmp MENU
         OPCION3:
             cls
-            print op3
-            print ln
+            printDerivada der5, der4, der3, der2, der1
             pausa
             jmp MENU
         OPCION4:
             cls
-            print op4
-            print ln
+            printIntegral int5, int4, int3, int2, int1, int0
             pausa
             jmp MENU
         OPCION5:
