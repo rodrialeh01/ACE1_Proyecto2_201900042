@@ -10,7 +10,7 @@ print macro txt
     int 21h
 endm
 ;macro para hacer una pausa
-getch macro
+pausa macro
     mov ah, 01h
     int 21h
 endm
@@ -24,7 +24,7 @@ printn macro n
     mov ax, 0
     mov al, n
     div baux
-
+    ;limpia la variable de texto
     mov naux[0], '0'
     mov naux[1], '0'
     mov naux[0], al

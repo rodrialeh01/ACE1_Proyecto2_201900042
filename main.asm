@@ -9,6 +9,7 @@ include macros.asm
 .data
     ; 0dh = \n y 0ah = \r
     ln                  db 0ah, '$'
+    ;INTRO DE INICIO
     inicio              db '================== Practica 2 / Proyecto 2 ================','$'
     inicio1             db '= Universidad de San Carlos de Guatemala','$'
     inicio2             db '= Facultad de Ingenieria','$'
@@ -18,6 +19,7 @@ include macros.asm
     inicio6             db '= Vacaciones de Diciembre 2022','$'
     inicio7             db '= Rodrigo Alejandro Hernandez de Leon','$'
     inicio8             db '= 201900042','$'
+    ;MENU DE OPCIONES
     inicio9             db 'Ingrese el numero de la opcion que desea, o presione ESC para salir','$'
     inicio10            db '= (1) Ingresar ecuacion','$'
     inicio11            db '= (2) Imprimir la funcion almacenada','$'
@@ -34,6 +36,8 @@ include macros.asm
     op5                 db 'OPCION 5','$'
     op6                 db 'OPCION 6','$'
     op7                 db 'OPCION 7','$'
+    operror             db 'Opcion no valida, presione ENTER para continuar','$'
+    msger1              db 'Numero no valido, Ingrese un numero entre 0 y 5','$'
     num                 db 55
     naux                db 2 dup('0'), '$'
     baux                db 10
@@ -101,7 +105,7 @@ textaux label byte
             print ln
             print inicio8
             print ln
-            getch
+            pausa
             jmp MENU
         MENU:
             cls
@@ -123,7 +127,7 @@ textaux label byte
             print ln
             print inicio17
             print ln
-            getch
+            pausa
             ;comparacion de la tecla presionada con ascci o con la letra a comparar
             cmp al, 49
             ;jump equal
@@ -147,7 +151,7 @@ textaux label byte
             cmp al, 56
             je SALIR
             print ln
-            jmp MENU
+            jmp OPCIONERROR
         OPCION1:
             cls
             print op1
@@ -165,68 +169,63 @@ textaux label byte
             mov num, al
 
             print ln
-            ;imprime el numero capturado
-            mov ah, 02h
-            mov dl, num
-            add dl, 30h
-            int 21h
-
-            print ln
             ;compara si es exponente 5 se va a la opcion 5
-            cmp dl, 53
+            mov al, num
+            cmp al, 5
             je OPT5
             ;compara si es exponente 4 se va a la opcion 4
-            cmp dl, 52
+            cmp al, 4
             je OPT4
             ;compara si es exponente 3 se va a la opcion 3
-            cmp dl, 51
+            cmp al, 3
             je OPT3
             ;compara si es exponente 2 se va a la opcion 2
-            cmp dl, 50
+            cmp al, 2
             je OPT2
             ;compara si es exponente 1 se va a la opcion 1
-            cmp dl, 49
+            cmp al, 1
             je OPT1
             ;compara si es exponente 0 se va a la opcion 0
-            cmp dl, 48
+            cmp al, 0
             je OPT0
+            jmp OPER1
         OPT5:
-            ; Captura el numero ingresado de dos digitos
             print exp5
             print ln
-            ; captura numero de dos digitos
+            ; captura numero
             getNumero coef5
             print ln
             
             print exp4
             print ln
-
+            ; captura numero
             getNumero coef4
             print ln
             
             print exp3
             print ln
-
+            ; captura numero
             getNumero coef3
             print ln
             
             print exp2
             print ln
-
+            ; captura numero
             getNumero coef2
             print ln
             
             print exp1
             print ln
-
+            ; captura numero
             getNumero coef1
             print ln
             
             print exp0
             print ln
-
+            ; captura numero
             getNumero coef0
             print ln
+            
             print msg
             printn coef5
             print x5
@@ -245,126 +244,47 @@ textaux label byte
             print mas
             printnum coef0
             print ln
-            getch
+            pausa
             jmp MENU
         OPT4:
             print exp4
             print ln
-
-            ; captura numero de dos digitos
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov decenas, al
-
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov unidades, al
-
-            mov al, decenas
-            mov bl, 10
-            mul bl
-            add al, unidades
-            mov coef4, al
-
+            ; captura numero
+            getNumero coef4
             print ln
             
             print exp3
             print ln
-
-            ; captura numero de dos digitos
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov decenas, al
-
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov unidades, al
-
-            mov al, decenas
-            mov bl, 10
-            mul bl
-            add al, unidades
-            mov coef3, al
-
+            ; captura numero
+            getNumero coef3
             print ln
             
             print exp2
             print ln
-
-            ; captura numero de dos digitos
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov decenas, al
-
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov unidades, al
-
-            mov al, decenas
-            mov bl, 10
-            mul bl
-            add al, unidades
-            mov coef2, al
-
+            ; captura numero
+            getNumero coef2
             print ln
             
             print exp1
             print ln
-
-            ; captura numero de dos digitos
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov decenas, al
-
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov unidades, al
-
-            mov al, decenas
-            mov bl, 10
-            mul bl
-            add al, unidades
-            mov coef1, al
-
+            ; captura numero
+            getNumero coef1
             print ln
             
             print exp0
             print ln
-
-            ; captura numero de dos digitos
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov decenas, al
-
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov unidades, al
-
-            mov al, decenas
-            mov bl, 10
-            mul bl
-            add al, unidades
-            mov coef0, al
-
+            ; captura numero
+            getNumero coef0
             print ln
+            
             print msg
-            printnum coef4
+            printn coef4
             print x4
             print mas
-            printnum coef3
+            printn coef3
             print x3
             print mas
-            printnum coef2
+            printn coef2
             print x2
             print mas
             printnum coef1
@@ -372,99 +292,38 @@ textaux label byte
             print mas
             printnum coef0
             print ln
+            pausa
             jmp MENU 
         OPT3:
             print exp3
             print ln
-
-            ; captura numero de dos digitos
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov decenas, al
-
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov unidades, al
-
-            mov al, decenas
-            mov bl, 10
-            mul bl
-            add al, unidades
-            mov coef3, al
-
+            ; captura numero
+            getNumero coef3
             print ln
             
             print exp2
             print ln
-
-            ; captura numero de dos digitos
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov decenas, al
-
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov unidades, al
-
-            mov al, decenas
-            mov bl, 10
-            mul bl
-            add al, unidades
-            mov coef2, al
-
+            ; captura numero
+            getNumero coef2
             print ln
             
             print exp1
             print ln
-
-            ; captura numero de dos digitos
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov decenas, al
-
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov unidades, al
-
-            mov al, decenas
-            mov bl, 10
-            mul bl
-            add al, unidades
-            mov coef1, al
-
+            ; captura numero
+            getNumero coef1
             print ln
             
             print exp0
             print ln
-
-            ; captura numero de dos digitos
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov decenas, al
-
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov unidades, al
-
-            mov al, decenas
-            mov bl, 10
-            mul bl
-            add al, unidades
-            mov coef0, al
-
+            ; captura numero
+            getNumero coef0
             print ln
-            printnum coef3
+            
+            print msg
+            printn coef3
             print x3
             print mas
-            printnum coef2
+            printn coef2
             print x2
             print mas
             printnum coef1
@@ -472,74 +331,29 @@ textaux label byte
             print mas
             printnum coef0
             print ln
+            pausa
             jmp MENU
         OPT2:
             print exp2
             print ln
-
-            ; captura numero de dos digitos
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov decenas, al
-
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov unidades, al
-
-            mov al, decenas
-            mov bl, 10
-            mul bl
-            add al, unidades
-            mov coef2, al
-
+            ; captura numero
+            getNumero coef2
             print ln
             
             print exp1
             print ln
-
-            ; captura numero de dos digitos
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov decenas, al
-
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov unidades, al
-
-            mov al, decenas
-            mov bl, 10
-            mul bl
-            add al, unidades
-            mov coef1, al
-
+            ; captura numero
+            getNumero coef1
             print ln
             
             print exp0
             print ln
-
-            ; captura numero de dos digitos
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov decenas, al
-
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov unidades, al
-
-            mov al, decenas
-            mov bl, 10
-            mul bl
-            add al, unidades
-            mov coef0, al
-
+            ; captura numero
+            getNumero coef0
             print ln
-            printnum coef2
+            
+            print msg
+            printn coef2
             print x2
             print mas
             printnum coef1
@@ -547,117 +361,87 @@ textaux label byte
             print mas
             printnum coef0
             print ln
+            pausa
             jmp MENU
         OPT1:
             print exp1
             print ln
-
-            ; captura numero de dos digitos
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov decenas, al
-
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov unidades, al
-
-            mov al, decenas
-            mov bl, 10
-            mul bl
-            add al, unidades
-            mov coef1, al
-
+            ; captura numero
+            getNumero coef1
             print ln
             
             print exp0
             print ln
-
-            ; captura numero de dos digitos
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov decenas, al
-
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov unidades, al
-
-            mov al, decenas
-            mov bl, 10
-            mul bl
-            add al, unidades
-            mov coef0, al
-
+            ; captura numero
+            getNumero coef0
             print ln
+            
+            print msg
             printnum coef1
             print x1
             print mas
             printnum coef0
             print ln
+            pausa
             jmp MENU
         OPT0:
             print exp0
             print ln
-
-            ; captura numero de dos digitos
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov decenas, al
-
-            mov ah, 01h
-            int 21h
-            sub al, 30h
-            mov unidades, al
-
-            mov al, decenas
-            mov bl, 10
-            mul bl
-            add al, unidades
-            mov coef0, al
-
+            ; captura numero
+            getNumero coef0
             print ln
+            
+            print msg
             printnum coef0
             print ln
+            pausa
+            jmp MENU
+        OPER1:
+            print msger1
+            print ln
+            pausa
             jmp MENU
         OPCION2:
             cls
             print op2
             print ln
-            getch
+            pausa
             jmp MENU
         OPCION3:
             cls
             print op3
             print ln
-            getch
+            pausa
             jmp MENU
         OPCION4:
             cls
             print op4
             print ln
-            getch
+            pausa
             jmp MENU
         OPCION5:
             cls
             print op5
             print ln
-            getch
+            pausa
             jmp MENU
         OPCION6:
             cls
             print op6
             print ln
-            getch
+            pausa
             jmp MENU
         OPCION7:
             cls
             print op7
             print ln
-            getch
+            pausa
+            jmp MENU
+        OPCIONERROR:
+            cls
+            print operror
+            print ln
+            pausa
             jmp MENU
         SALIR:
             .exit
