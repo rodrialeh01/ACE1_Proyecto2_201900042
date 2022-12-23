@@ -70,11 +70,14 @@ include macros.asm
     ac                  db 0
     msg                 db 'La funcion ingresada es: ', '$'
     msg2                db 'La derivada de la funcion ingresada es: ', '$'
+    msg3                db 'La integral de la funcion ingresada es: ', '$'
+    x6                  db 'x^6 ','$'
     x5                  db 'x^5 ','$'  
     x4                  db 'x^4 ','$'
     x3                  db 'x^3 ','$'
     x2                  db 'x^2 ','$'
     x1                  db 'x ','$'
+    constant            db 'C ','$'
     mas                 db '+ ','$'
     menos               db '- ','$'
 
@@ -154,15 +157,31 @@ textaux label byte
             print ln
             jmp OPCIONERROR
         OPCION1:
+            ; LIMPIA LAS VARIABLES
+            mov coef5, 0
+            mov coef4, 0
+            mov coef3, 0
+            mov coef2, 0
+            mov coef1, 0
+            mov coef0, 0
+            mov der5, 0
+            mov der4, 0
+            mov der3, 0
+            mov der2, 0
+            mov der1, 0
+            mov int5, 0
+            mov int4, 0
+            mov int3, 0
+            mov int2, 0
+            mov int1, 0
+            mov int0, 0
+            mov ac, 0
             cls
             print op1
             print ln
-            mov ax, seg @data
-            mov ds, ax
             ; IMPRIME LA PREGUNTA
-            mov ah, 09h
-            lea dx, ins1
-            int 21h
+            print ins1
+            print ln
             ; Captura el numero ingresado
             mov ah, 01h
             int 21h
@@ -197,6 +216,7 @@ textaux label byte
             getNumero coef5
             print ln
             multiplicar coef5, 5, der5
+            dividir coef5, 6, int5
 
             print exp4
             print ln
@@ -204,6 +224,7 @@ textaux label byte
             getNumero coef4
             print ln
             multiplicar coef4, 4, der4
+            dividir coef4, 5, int4
             
             print exp3
             print ln
@@ -211,6 +232,7 @@ textaux label byte
             getNumero coef3
             print ln
             multiplicar coef3, 3, der3
+            dividir coef3, 4, int3
             
             print exp2
             print ln
@@ -218,6 +240,7 @@ textaux label byte
             getNumero coef2
             print ln
             multiplicar coef2, 2, der2
+            dividir coef2, 3, int2
             
             print exp1
             print ln
@@ -225,11 +248,13 @@ textaux label byte
             getNumero coef1
             print ln
             multiplicar coef1, 1, der1
+            dividir coef1, 2, int1
             
             print exp0
             print ln
             ; captura numero
             getNumero coef0
+            dividir coef0, 1, int0
             print ln
             
             print msg
@@ -264,7 +289,29 @@ textaux label byte
             printn der2
             print x1
             print mas
-            printnum der1
+            printn der1
+            print ln
+            ;INTEGRAL
+            print msg3
+            printn int5
+            print x6
+            print mas
+            printn int4
+            print x5
+            print mas
+            printn int3
+            print x4
+            print mas
+            printn int2
+            print x3
+            print mas
+            printn int1
+            print x2
+            print mas
+            printn int0
+            print x1
+            print mas
+            print constant
             print ln
             pausa
             jmp MENU
@@ -275,19 +322,22 @@ textaux label byte
             getNumero coef4
             print ln
             multiplicar coef4, 4, der4
+            dividir coef4, 5, int4
             
             print exp3
             print ln
             ; captura numero
             getNumero coef3
             multiplicar coef3, 3, der3
+            dividir coef3, 4, int3
             print ln
             
             print exp2
             print ln
             ; captura numero
             getNumero coef2
-            multiplicar coef2, 2, der2 
+            multiplicar coef2, 2, der2
+            dividir coef2, 3, int2
             print ln
             
             print exp1
@@ -295,12 +345,14 @@ textaux label byte
             ; captura numero
             getNumero coef1
             multiplicar coef1, 1, der1
+            dividir coef1, 2, int1
             print ln
             
             print exp0
             print ln
             ; captura numero
             getNumero coef0
+            dividir coef0, 1, int0
             print ln
             
             print msg
@@ -326,13 +378,15 @@ textaux label byte
             ; captura numero
             getNumero coef3
             multiplicar coef3, 3, der3
+            dividir coef3, 4, int3
             print ln
             
             print exp2
             print ln
             ; captura numero
             getNumero coef2
-            multiplicar coef2, 2, der2 
+            multiplicar coef2, 2, der2
+            dividir coef2, 3, int2 
             print ln
             
             print exp1
@@ -340,12 +394,14 @@ textaux label byte
             ; captura numero
             getNumero coef1
             multiplicar coef1, 1, der1
+            dividir coef1, 2, int1
             print ln
             
             print exp0
             print ln
             ; captura numero
             getNumero coef0
+            dividir coef0, 1, int0
             print ln
             
             print msg
@@ -367,7 +423,8 @@ textaux label byte
             print ln
             ; captura numero
             getNumero coef2
-            multiplicar coef2, 2, der2 
+            multiplicar coef2, 2, der2
+            dividir coef2, 3, int2
             print ln
             
             print exp1
@@ -375,12 +432,14 @@ textaux label byte
             ; captura numero
             getNumero coef1
             multiplicar coef1, 1, der1
+            dividir coef1, 2, int1
             print ln
             
             print exp0
             print ln
             ; captura numero
             getNumero coef0
+            dividir coef0, 1, int0
             print ln
             
             print msg
@@ -400,12 +459,14 @@ textaux label byte
             ; captura numero
             getNumero coef1
             multiplicar coef1, 1, der1
+            dividir coef1, 2, int1
             print ln
             
             print exp0
             print ln
             ; captura numero
             getNumero coef0
+            dividir coef0, 1, int0
             print ln
             
             print msg
@@ -421,6 +482,7 @@ textaux label byte
             print ln
             ; captura numero
             getNumero coef0
+            dividir coef0, 1, int0
             print ln
             
             print msg

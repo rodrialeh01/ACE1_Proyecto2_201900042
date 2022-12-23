@@ -106,3 +106,12 @@ multiplicar macro coefi, expo, total
     mov ax, 0000h
     mov al, bl
 endm
+;macro para realizar la division
+dividir macro coefi, expo, total
+    mov al, coefi
+    mov bl, expo
+    div bl
+    mov total, al
+    mov ax, 0000h
+    mov al, bl
+endm
