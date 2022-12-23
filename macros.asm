@@ -97,3 +97,12 @@ limpiarNumero macro text
         inc bx
     loop repetir
 endm
+;macro para realizar la multiplicacion
+multiplicar macro coefi, expo, total
+    mov al, coefi
+    mov bl, expo
+    mul bl
+    mov total, al
+    mov ax, 0000h
+    mov al, bl
+endm

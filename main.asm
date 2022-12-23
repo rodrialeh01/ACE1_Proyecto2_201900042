@@ -48,14 +48,13 @@ include macros.asm
     exp2                db 'Ingrese el coeficiente del valor x^2','$'
     exp1                db 'Ingrese el coeficiente del valor x^1','$'
     exp0                db 'Ingrese el coeficiente del valor x^0','$'
-    numero              db ?
     unidades            db 0
     decenas             db 0
-    coef5               db 5
-    coef4               db 4
-    coef3               db 3
-    coef2               db 2
-    coef1               db 1
+    coef5               db 0
+    coef4               db 0
+    coef3               db 0
+    coef2               db 0
+    coef1               db 0
     coef0               db 0 
     der5                db 0
     der4                db 0
@@ -68,7 +67,9 @@ include macros.asm
     int2                db 0
     int1                db 0
     int0                db 0
+    ac                  db 0
     msg                 db 'La funcion ingresada es: ', '$'
+    msg2                db 'La derivada de la funcion ingresada es: ', '$'
     x5                  db 'x^5 ','$'  
     x4                  db 'x^4 ','$'
     x3                  db 'x^3 ','$'
@@ -195,30 +196,35 @@ textaux label byte
             ; captura numero
             getNumero coef5
             print ln
-            
+            multiplicar coef5, 5, der5
+
             print exp4
             print ln
             ; captura numero
             getNumero coef4
             print ln
+            multiplicar coef4, 4, der4
             
             print exp3
             print ln
             ; captura numero
             getNumero coef3
             print ln
+            multiplicar coef3, 3, der3
             
             print exp2
             print ln
             ; captura numero
             getNumero coef2
             print ln
+            multiplicar coef2, 2, der2
             
             print exp1
             print ln
             ; captura numero
             getNumero coef1
             print ln
+            multiplicar coef1, 1, der1
             
             print exp0
             print ln
@@ -244,6 +250,22 @@ textaux label byte
             print mas
             printnum coef0
             print ln
+            ;DERIVADA
+            print msg2
+            printn der5
+            print x4
+            print mas
+            printn der4
+            print x3
+            print mas
+            printn der3
+            print x2
+            print mas
+            printn der2
+            print x1
+            print mas
+            printnum der1
+            print ln
             pausa
             jmp MENU
         OPT4:
@@ -252,23 +274,27 @@ textaux label byte
             ; captura numero
             getNumero coef4
             print ln
+            multiplicar coef4, 4, der4
             
             print exp3
             print ln
             ; captura numero
             getNumero coef3
+            multiplicar coef3, 3, der3
             print ln
             
             print exp2
             print ln
             ; captura numero
             getNumero coef2
+            multiplicar coef2, 2, der2 
             print ln
             
             print exp1
             print ln
             ; captura numero
             getNumero coef1
+            multiplicar coef1, 1, der1
             print ln
             
             print exp0
@@ -299,18 +325,21 @@ textaux label byte
             print ln
             ; captura numero
             getNumero coef3
+            multiplicar coef3, 3, der3
             print ln
             
             print exp2
             print ln
             ; captura numero
             getNumero coef2
+            multiplicar coef2, 2, der2 
             print ln
             
             print exp1
             print ln
             ; captura numero
             getNumero coef1
+            multiplicar coef1, 1, der1
             print ln
             
             print exp0
@@ -338,12 +367,14 @@ textaux label byte
             print ln
             ; captura numero
             getNumero coef2
+            multiplicar coef2, 2, der2 
             print ln
             
             print exp1
             print ln
             ; captura numero
             getNumero coef1
+            multiplicar coef1, 1, der1
             print ln
             
             print exp0
@@ -368,6 +399,7 @@ textaux label byte
             print ln
             ; captura numero
             getNumero coef1
+            multiplicar coef1, 1, der1
             print ln
             
             print exp0
