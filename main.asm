@@ -11,14 +11,16 @@ include macros.asm
     ln          db      0ah, '$'
     ;INTRO DE INICIO
     inicio      db      '================== Practica 2 / Proyecto 2 ================','$'
-    inicio1     db      '= Universidad de San Carlos de Guatemala','$'
-    inicio2     db      '= Facultad de Ingenieria','$'
-    inicio3     db      '= Escuela de Ciencias y Sistemas','$'
-    inicio4     db      '= Arquitectura de Computadores y Ensambladores 1','$'
-    inicio5     db      '= Seccion: N','$'
-    inicio6     db      '= Vacaciones de Diciembre 2022','$'
-    inicio7     db      '= Rodrigo Alejandro Hernandez de Leon','$'
-    inicio8     db      '= 201900042','$'
+    inicio1     db      '= Universidad de San Carlos de Guatemala                  =','$'
+    inicio2     db      '= Facultad de Ingenieria                                  =','$'
+    inicio3     db      '= Escuela de Ciencias y Sistemas                          =','$'
+    inicio4     db      '= Arquitectura de Computadores y Ensambladores 1          =','$'
+    inicio5     db      '= Seccion: N                                              =','$'
+    inicio6     db      '= Vacaciones de Diciembre 2022                            =','$'
+    inicio7     db      '= Rodrigo Alejandro Hernandez de Leon                     =','$'
+    inicio8     db      '= 201900042                                               =','$'
+    inicio09    db      '= Presione cualquier tecla para continuar                 =','$'
+    inicio010   db      '===========================================================','$'
     ;MENU DE OPCIONES
     inicio9     db      'Ingrese el numero de la opcion que desea, o presione ESC para salir','$'
     inicio10    db      '= (1) Ingresar ecuacion','$'
@@ -40,13 +42,14 @@ include macros.asm
     naux        db      2 dup('0'), '$'
     baux        db      10
     ;PETICION DE LOS COEFICIENTES
-    ins1        db      '¿Cual es el maximo exponente de la funcion?','$'
+    ins1        db      168,'Cual es el maximo exponente de la funcion?','$'
     exp5        db      'Ingrese el coeficiente del valor x^5','$'
     exp4        db      'Ingrese el coeficiente del valor x^4','$'
     exp3        db      'Ingrese el coeficiente del valor x^3','$'
     exp2        db      'Ingrese el coeficiente del valor x^2','$'
     exp1        db      'Ingrese el coeficiente del valor x^1','$'
     exp0        db      'Ingrese el coeficiente del valor x^0','$'
+    prueba      db      'Si entra','$'
     unidades    db      0
     decenas     db      0
     ;VARIABLES DE LOS COEFICIENTES DE LA FUNCION
@@ -112,6 +115,10 @@ main PROC
                  print            inicio7
                  print            ln
                  print            inicio8
+                 print            ln
+                 print            inicio09
+                 print            ln
+                 print            inicio010
                  print            ln
                  pausa
                  jmp              MENU

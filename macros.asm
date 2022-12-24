@@ -62,9 +62,7 @@ getNumero macro var
     cmp longtextaux,1
     je n1
     cmp longtextaux,2
-    je negativo
-    cmp longtextaux,3
-    je negativo1
+    je n2
     ; VERIFICA QUE EL NUMERO INGRESADO SEA DE 1 DIGITO (POSITIVO)
     n1:
         mov al,numtextaux
@@ -88,34 +86,6 @@ getNumero macro var
         mov bl, 10
         mul bl
         add al, unidades
-        mov var, al
-    ; VERIFICA QUE EL NUMERO INGRESADO SEA DE 2 DIGITOS (NEGATIVO)
-    negativo1:
-        cmp numtextaux[0], '-'
-        je n3
-    ; VERIFICA QUE EL NUMERO INGRESADO SEA DE 3 DIGITOS (POSITIVO)
-    n3:
-        mov unidades,0
-        mov decenas,0
-
-        mov al, numtextaux[1]
-        sub al, 30h
-        mov decenas, al
-
-        mov al, numtextaux[2]
-        sub al, 30h
-        mov unidades, al
-
-        mov al, decenas
-        mov bl, 10
-        mul bl
-        add al, unidades
-        mov var, al
-        mov unidades,0
-        mov decenas,0
-        mov var, al
-        mov al, var
-        neg al
         mov var, al
     salir:
 endm
