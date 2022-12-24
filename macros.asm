@@ -271,3 +271,54 @@ printIntegral macro c5, c4, c3, c2, c1, c0
     print constant
     print ln
 endm
+
+verificarFuncion macro c5,c4,c3,c2,c1,c0, verificador
+    LOCAL COF5,COF4,COF3,COF2,COF1,COF0,PR5,PR4,PR3,PR2,PR1,PR0,salir
+    mov verificador, 0
+    cmp c5 , 0
+    je COF4
+    jne COF5
+    COF5:
+        cmp c5 , 0
+        je COF4
+        jne PR5
+    PR5:
+        mov verificador, 1
+        jmp salir
+    COF4:
+        cmp c4, 0
+        je COF3
+        jne PR4
+    PR4:
+        mov verificador, 1
+        jmp salir
+    COF3:
+        cmp c3, 0
+        je COF2
+        jne PR3
+    PR3:
+        mov verificador, 1
+        jmp salir
+    COF2:
+        cmp c2, 0
+        je COF1
+        jne PR2
+    PR2:
+        mov verificador, 1
+        jmp salir
+    COF1:
+        cmp c1, 0
+        je COF0
+        jne PR1
+    PR1:
+        mov verificador, 1
+        jmp salir
+    COF0:
+        cmp c0, 0
+        je salir
+        jne PR0
+    PR0:
+        mov verificador, 1
+    salir:
+        
+endm

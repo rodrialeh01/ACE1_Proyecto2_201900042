@@ -32,11 +32,14 @@ include macros.asm
     op5                 db 'OPCION 5','$'
     op6                 db 'OPCION 6','$'
     op7                 db 'OPCION 7','$'
+    ;MENSAJE DE ERRORES
     operror             db 'Opcion no valida, presione ENTER para continuar','$'
     msger1              db 'Numero no valido, Ingrese un numero entre 0 y 5','$'
+    msger2              db 'No se ha ingresado ninguna funcion','$'
     num                 db 55
     naux                db 2 dup('0'), '$'
     baux                db 10
+    ;PETICION DE LOS COEFICIENTES
     ins1                db '¿Cual es el maximo exponente de la funcion?','$'
     exp5                db 'Ingrese el coeficiente del valor x^5','$'
     exp4                db 'Ingrese el coeficiente del valor x^4','$'
@@ -46,17 +49,20 @@ include macros.asm
     exp0                db 'Ingrese el coeficiente del valor x^0','$'
     unidades            db 0
     decenas             db 0
+    ;VARIABLES DE LOS COEFICIENTES DE LA FUNCION
     coef5               db 0
     coef4               db 0
     coef3               db 0
     coef2               db 0
     coef1               db 0
     coef0               db 0 
+    ;VARIABLES DE LOS COEFICIENTES DE LA DERIVADA
     der5                db 0
     der4                db 0
     der3                db 0
     der2                db 0
     der1                db 0
+    ;VARIABLES DE LOS COEFICIENTES DE LA INTEGRAL
     int5                db 0
     int4                db 0
     int3                db 0
@@ -64,6 +70,7 @@ include macros.asm
     int1                db 0
     int0                db 0
     ac                  db 0
+    ;MENSAJES PARA MOSTRAR EL RESULTADO DE LA FUNCION
     msg                 db 'f(x) = ', '$'
     msgDerivada         db 'La derivada de la funcion ingresada es: ', '$'
     msgIntegral         db 'La integral de la funcion ingresada es: ', '$'
@@ -73,6 +80,7 @@ include macros.asm
     x3                  db 'x^3 ','$'
     x2                  db 'x^2 ','$'
     x1                  db 'x ','$'
+    verif               db 0
     constant            db 'C ','$'
     mas                 db '+ ','$'
     menos               db '- ','$'
@@ -387,20 +395,20 @@ textaux label byte
             pausa
             jmp MENU
         OPCION2:
-            cls
-            printFunc coef5, coef4, coef3, coef2, coef1, coef0
-            pausa
-            jmp MENU
+            verificarFuncion coef5, coef4, coef3, coef2, coef1, coef0, verif
+            cmp verif, 0
+            je OPCIONERROR2
+            jne IMPFUNC
         OPCION3:
-            cls
-            printDerivada der5, der4, der3, der2, der1
-            pausa
-            jmp MENU
+            verificarFuncion coef5, coef4, coef3, coef2, coef1, coef0, verif
+            cmp verif, 0
+            je OPCIONERROR2
+            jne IMPDER
         OPCION4:
-            cls
-            printIntegral int5, int4, int3, int2, int1, int0
-            pausa
-            jmp MENU
+            verificarFuncion coef5, coef4, coef3, coef2, coef1, coef0, verif
+            cmp verif, 0
+            je OPCIONERROR2
+            jne IMPINT
         OPCION5:
             cls
             print op5
@@ -422,6 +430,27 @@ textaux label byte
         OPCIONERROR:
             cls
             print operror
+            print ln
+            pausa
+            jmp MENU
+        IMPFUNC:
+            cls
+            printFunc coef5, coef4, coef3, coef2, coef1, coef0
+            pausa
+            jmp MENU
+        IMPDER:
+            cls
+            printDerivada der5, der4, der3, der2, der1
+            pausa
+            jmp MENU
+        IMPINT:
+            cls
+            printIntegral int5, int4, int3, int2, int1, int0
+            pausa
+            jmp MENU
+        OPCIONERROR2:
+            cls
+            print msger2
             print ln
             pausa
             jmp MENU
