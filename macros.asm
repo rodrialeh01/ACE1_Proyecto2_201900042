@@ -117,7 +117,7 @@ dividir macro coefi, expo, total
             mov ax, 0000h
             mov al, bl
 endm
-
+; imprime la funcion
 printFunc macro c5, c4, c3, c2, c1, c0
               LOCAL  COF5,COF4,COF3,COF2,COF1,COF0,PR5,PR4,PR3,PR2,PR1,PR0,salir
               print  msg
@@ -172,7 +172,7 @@ printFunc macro c5, c4, c3, c2, c1, c0
               print  inicio09
               print  ln
 endm
-
+; imprime la derivada
 printDerivada macro c4, c3, c2, c1, c0
                   LOCAL  COF4,COF3,COF2,COF1,COF0,PR4,PR3,PR2,PR1,PR0,salir
                   print  msgDerivada
@@ -220,7 +220,7 @@ printDerivada macro c4, c3, c2, c1, c0
                   print  inicio09
                   print  ln
 endm
-
+;imprime la integral
 printIntegral macro c5, c4, c3, c2, c1, c0
                   LOCAL  COF5,COF4,COF3,COF2,COF1,COF0,PR5,PR4,PR3,PR2,PR1,PR0,salir
                   print  msgIntegral
@@ -279,7 +279,7 @@ printIntegral macro c5, c4, c3, c2, c1, c0
                   print  inicio09
                   print  ln
 endm
-
+; verifica si existe la funcion
 verificarFuncion macro c5,c4,c3,c2,c1,c0, verificador
                      LOCAL COF5,COF4,COF3,COF2,COF1,COF0,PR5,PR4,PR3,PR2,PR1,PR0,salir
                      mov   verificador, 0
