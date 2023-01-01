@@ -109,16 +109,22 @@ include macros.asm
     gradon             db      0
     limsn              db      0
     limin              db      0
-    xinicialn          dd      0
+    xinicialn          db      10 dup(0)  
     its                db      0
     tols               db      0
     grados             db      0
     limss              db      0
     limis              db      0
-    xini               db      'X INICIAL: ','$'
-    xinicials          dd      0
+    tmp                db      0
+    dos                dq      2.0
+    diez               dq      10.0
+    cont1              db      0
+    dectemp            dq      0.0
+    punto              db      '.','$'
+    msgxini               db      'X INICIAL: ','$'
+    xinicials          dq      0.0
     ;ERROR DE LIMITES
-    errornew           db      'ERROR: El limite inferior es mayor que el limite superior'
+    errornew           db      'ERROR: El limite inferior es mayor que el limite superior','$'
     strxinicial        db      30 dup(' '),'$'
                        textaux label byte
     maxtextaux         db      4
@@ -494,8 +500,10 @@ main PROC
                  getNumero        gradon,negnewton
                  mov al, limin
                  mov bl, limsn
-                 cmp ax,bx
-                 jbe ERRORNEWTON
+                 cmp al,bl
+                 jae ERRORNEWTON
+                 print            ln
+                 calcularInicial  xinicialn,limin,limis
                  print            ln
                  pausa
                  jmp              MENU

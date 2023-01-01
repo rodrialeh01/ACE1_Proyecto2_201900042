@@ -110,10 +110,22 @@ multiplicar macro coefi, expo, total
 endm
 ;macro para realizar la division
 dividir macro coefi, expo, total
+print prueba
+print ln
             mov al, coefi
+            printn  coefi
+print prueba
+print ln
             mov bl, expo
+            printn expo
+print prueba
+print ln
             div bl
+print prueba
+print ln
             mov total, al
+print prueba
+print ln
             mov ax, 0000h
             mov al, bl
 endm
@@ -329,4 +341,87 @@ verificarFuncion macro c5,c4,c3,c2,c1,c0, verificador
                      mov   verificador, 1
     salir:           
         
+endm
+
+xinicial macro ls,li,xini
+       mov al, ls
+       add al, li  
+       mov tmp1, al
+       printn tmp1
+       ;dividir entre 2
+       print   ln
+       mov al,0
+       mov al, tmp1
+       mov bl, dos
+       div bl
+       mov xini, al
+endm
+
+dividir2 macro num1,num2,result,residuo               
+       LOCAL ciclo,salir1,salir2,salir3             
+       mov al, num1
+       mov bl, num2
+       sub al,bl
+       mov tmp1,al
+       mov contador,0
+       ciclo:
+              mov al, tmp1
+              cmp al,0
+              je salir1
+              jl salir2
+              inc contador
+              sub al, num2
+              mov tmp1, al
+              jmp ciclo
+       salir1:
+              mov cl, contador
+              add cl,1
+              mov result, cl
+              mov residuo, 0
+              jmp salir3
+       salir2:
+              mov cl,contador
+              mov result, cl
+              add tmp1, num2
+              mov dl, tmp1
+              mov residuo, dl
+              jmp salir3
+       salir3:
+endm
+
+imprimirDecimales macro divisor,resultado, residuo, gradodec
+       LOCAL ciclo,salir,salir2
+       printn resultado
+       print punto
+       mov contador1,0
+       mov tmp3,0
+       mov al, residuo
+       mov tmp4, al
+       mov al, residuo
+       cmp al,0
+       je salir 
+       ciclo:
+              mov dl, gradodec
+              mov cl, contador1
+              cmp cl,dl
+              je salir2
+              mov al, tmp4
+              mov bl, 10
+              mul bl
+              mov tmp3, al
+              dividir2 tmp3, divisor,tmp5,tmp4
+              printnum2 tmp5
+              inc contador1
+              jmp ciclo
+       salir:
+              printn 0
+              jmp salir2
+       salir2:
+endm
+
+printnum2 macro numeroprint 
+       mov dl, numeroprint
+       add dl, 30h
+       mov ah, 02h
+       int 21h
 endm

@@ -50,6 +50,7 @@ include macros.asm
     exp1        db      'Ingrese el coeficiente del valor x^1','$'
     exp0        db      'Ingrese el coeficiente del valor x^0','$'
     prueba      db      'Si entra','$'
+    punto       db      '.','$'
     unidades    db      0
     decenas     db      0
     ;VARIABLES DE LOS COEFICIENTES DE LA FUNCION
@@ -87,7 +88,39 @@ include macros.asm
     constant    db      'C ','$'
     mas         db      '+ ','$'
     menos       db      '- ','$'
-
+    msgresult   db      'RESULTADO: ','$'
+    msgresiduo  db      'RESIDUO: ','$'
+    ;METODO DE NEWTON Y STEFFENSEN
+    msgNewton          db      '==================METODO DE NEWTON================','$'
+    msgSteffensen      db      '==================METODO DE STEFFENSEN================','$'
+    msgIteraciones     db      'Ingrese el numero de iteraciones que desea realizar: ','$'
+    itn                db    0
+    its                db    0
+    msgCoefTolerancia  db      'Ingrese el coeficiente de tolerancia: ','$'
+    toln                db    0
+    tols                db    0
+    msgGradoTolerancia db      'Ingrese el grado de tolerancia: ','$'
+    gradon             db    0
+    grados             db    0
+    msgLimiteSuperior  db      'Ingrese el limite superior: ','$'
+    limsn              db    0
+    limss              db    0
+    msgLimiteInferior  db      'Ingrese el limite inferior: ','$'
+    limin              db    0
+    limis              db    0
+    res                db    0
+    tmp                db    0
+    tmp1            db    0
+    xinin           db    0
+    dos             db    2
+    contador        db    0
+    contador1       db    0
+    tmp2            db    0
+    tmp3            db    0
+    tmp4            db    0
+    tmp5            db    0
+    tmp6            db    0
+    msgErrorNewton     db    'ERROR: El limite inferior es mayor que el limite superior','$'
                 textaux label byte
     maxtextaux  db      4
     longtextaux db      ?
@@ -430,8 +463,40 @@ main PROC
                  jmp              MENU
     OPCION6:     
                  cls
-                 print            op6
+                 print            msgNewton
                  print            ln
+                 print            msgIteraciones
+                 print            ln
+                 getNumero        itn
+                 print            ln
+                 print            msgCoefTolerancia
+                 print            ln
+                 getNumero        toln
+                 print            ln
+                 print            msgGradoTolerancia
+                 print            ln
+                 getNumero        gradon
+                 print            ln
+                 print            msgLimiteSuperior
+                 print            ln
+                 getNumero        limsn
+                 print            ln
+                 print            msgLimiteInferior
+                 print            ln
+                 getNumero        limin
+                 print            ln
+                 mov al, 0
+                 mov bl, 0
+                 mov al, limin
+                 mov bl, limsn
+                 cmp al, bl
+                 jae ERRORNEWTON
+                 add al,bl
+                 mov tmp, al
+                 dividir2 tmp,2,xinin, res
+                 print            ln
+                 print            msgresult
+                 imprimirDecimales 2, xinin,res,gradon
                  pausa
                  jmp              MENU
     OPCION7:     
@@ -467,6 +532,12 @@ main PROC
                  print            ln
                  pausa
                  jmp              MENU
+    ERRORNEWTON:
+                cls
+                print            msgErrorNewton
+                print            ln
+                pausa
+                jmp              MENU
     SALIR:       
 .exit
 main ENDP

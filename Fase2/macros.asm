@@ -67,13 +67,13 @@ getNumero macro var,bannegativo
                      cmp           longtextaux,3
                      je            option3
        ; VERIFICA QUE EL NUMERO INGRESADO SEA DE 1 DIGITO (POSITIVO)
-       option1:          
+       option1:      
                      mov           al,numtextaux
-                     sub           al, 30h                                                            ;48
+                     sub           al, 30h                                                                             ;48
                      mov           var, al
                      jmp           salirmacro
        ; VERIFICA QUE EL NUMERO INGRESADO SEA DE 2 DIGITOS (POSITIVO) O 1 DIGITO (NEGATIVO)
-       option2:          
+       option2:      
                      cmp           numtextaux[0],'-'
                      je            nlen2negativo
                      jmp           nlen2positivo
@@ -97,11 +97,11 @@ getNumero macro var,bannegativo
        nlen2negativo:
                      mov           bannegativo,1
                      mov           al,numtextaux[1]
-                     sub           al, 30h                                                            ;48
+                     sub           al, 30h                                                                             ;48
                      mov           var, al
                      jmp           salirmacro
        ; VERIFICA QUE EL NUMERO INGRESADO SEA DE 2 DIGITOS (NEGATIVO)
-       option3:        
+       option3:      
                      cmp           numtextaux[0],'-'
                      je            nlen3negativo
                      jmp           salirmacro
@@ -123,7 +123,7 @@ getNumero macro var,bannegativo
                      mul           bl
                      add           al, unidades
                      mov           var, al
-       salirmacro:        
+       salirmacro:   
 endm
 ;limpia la variable de texto
 limpiarNumero macro text
@@ -270,90 +270,90 @@ printDerivada macro c4, c3, c2, c1, c0
                      cmp    c4 , 0
                      je     COF3
                      jne    COF4
-       COF4:     
-                 cmp    c4, 0
-                 je     COF3
-                 jne    PR4
-       PR4:      
-                 cmp    neg4,1
-                 je     N4
-                 jne    P4
-       N4:       
-                 print  menos
-                 printn c4
-                 print  x4
-                 JMP    COF3
-       P4:       
-                 print  mas
-                 printn c4
-                 print  x4
-                 JMP    COF3
-       COF3:     
-                 cmp    c3, 0
-                 je     COF2
-                 jne    PR3
-       PR3:      
-                 cmp    neg3,1
-                 je     N3
-                 jne    P3
-       N3:       
-                 print  menos
-                 printn c3
-                 print  x3
-                 JMP    COF2
-       P3:       
-                 print  mas
-                 printn c3
-                 print  x3
-                 JMP    COF2
-       COF2:     
-                 cmp    c2, 0
-                 je     COF1
-                 jne    PR2
-       PR2:      
-                 cmp    neg2,1
-                 je     N2
-                 jne    P2
-       N2:       
-                 print  menos
-                 printn c2
-                 print  x2
-                 JMP    COF1
-       P2:       
-                 print  mas
-                 printn c2
-                 print  x2
-                 JMP    COF1
-       COF1:     
-                 cmp    c1, 0
-                 je     COF0
-                 jne    PR1
-       PR1:      
-                 cmp    neg1,1
-                 je     N1
-                 jne    P1
-       N1:       
-                 print  menos
-                 printn c1
-                 print  x1
-                 JMP    COF0
-       P1:       
-                 print  mas
-                 printn c1
-                 print  x1
-                 JMP    COF0
-       COF0:     
-                 cmp    neg0,1
-                 je     N0
-                 jne    P0
-       N0:       
-                 print  menos
-                 printn c0
-                 JMP    salir
-       P0:       
-                 print  mas
-                 printn c0
-                 JMP    salir
+       COF4:         
+                     cmp    c4, 0
+                     je     COF3
+                     jne    PR4
+       PR4:          
+                     cmp    neg4,1
+                     je     N4
+                     jne    P4
+       N4:           
+                     print  menos
+                     printn c4
+                     print  x4
+                     JMP    COF3
+       P4:           
+                     print  mas
+                     printn c4
+                     print  x4
+                     JMP    COF3
+       COF3:         
+                     cmp    c3, 0
+                     je     COF2
+                     jne    PR3
+       PR3:          
+                     cmp    neg3,1
+                     je     N3
+                     jne    P3
+       N3:           
+                     print  menos
+                     printn c3
+                     print  x3
+                     JMP    COF2
+       P3:           
+                     print  mas
+                     printn c3
+                     print  x3
+                     JMP    COF2
+       COF2:         
+                     cmp    c2, 0
+                     je     COF1
+                     jne    PR2
+       PR2:          
+                     cmp    neg2,1
+                     je     N2
+                     jne    P2
+       N2:           
+                     print  menos
+                     printn c2
+                     print  x2
+                     JMP    COF1
+       P2:           
+                     print  mas
+                     printn c2
+                     print  x2
+                     JMP    COF1
+       COF1:         
+                     cmp    c1, 0
+                     je     COF0
+                     jne    PR1
+       PR1:          
+                     cmp    neg1,1
+                     je     N1
+                     jne    P1
+       N1:           
+                     print  menos
+                     printn c1
+                     print  x1
+                     JMP    COF0
+       P1:           
+                     print  mas
+                     printn c1
+                     print  x1
+                     JMP    COF0
+       COF0:         
+                     cmp    neg0,1
+                     je     N0
+                     jne    P0
+       N0:           
+                     print  menos
+                     printn c0
+                     JMP    salir
+       P0:           
+                     print  mas
+                     printn c0
+                     JMP    salir
        salir:        
 
                      print  ln
@@ -469,4 +469,65 @@ verificarFuncion macro c5,c4,c3,c2,c1,c0, verificador
                         mov   verificador, 1
        salir:           
         
+endm
+
+calcularInicial macro xinicio, li,ls
+       LOCAL label1
+       mov tmp, 0
+       mov al,0
+       mov bl,0
+       ;HAGO LA SUMA DE LI + LS
+                       mov      al, li
+                       mov      bl, ls
+                       add      al,bl
+                       mov      tmp, al
+       ;DIVISION CON 2
+                       printn   tmp
+endm
+printdec macro res
+                mov dl,res
+                add dl,30h
+                mov ah,02h
+                int 21h
+endm
+ImprimirDecimal1 macro decimal
+                        LOCAL   salir,decimales
+       ;LIMPIA EL TMP
+                        mov     tmp,0
+       ;INSERTA EL DECIMAL A LA PILA
+                        fld     decimal
+       ;LO CONVIERTE A ENTERO
+                        frndint
+       ;GUARDA EL ENTERO EN EL TMP
+                        fistp   tmp
+       ;IMPRIME EL ENTERO
+                        printn  tmp
+       ;IMPRIME UN PUNTO
+                        print   punto
+       ;EL XINICIAL SERA DE 3 DECIMALES
+       ;mueve el decimal a un temporal
+                        fld     decimal
+                        fstp    dectemp
+                        jmp     decimales
+       decimales:       
+       ;CICLO DE IMPRIMIR DECIMALES
+                        cmp     cont1, 3
+                        je      salir
+       ;INSERTA A LA PILA
+                        fld     dectemp
+       ;RESTA EL ENTERO CON EL DECIMAL
+                        fisub   tmp
+       ;SACA EL RESULTADO DE LA PILA
+                        fstp    dectemp
+       ;MULTIPLICA POR 10
+                        fld     dectemp
+                        fmul    diez
+       ;convierte a entero
+                        frndint
+                        fistp   tmp
+                        printn  tmp
+                        inc     cont1
+                        jmp     decimales
+       salir:           
+
 endm
