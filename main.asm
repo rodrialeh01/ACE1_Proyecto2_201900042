@@ -560,8 +560,61 @@ main PROC
                  jmp              MENU
     OPCION7:     
                  cls
-                 print            op7
+                 ;VERIFICAR SI HAY UNA FUNCION
+                 verificarFuncion coef5, coef4, coef3, coef2, coef1, coef0, verif
+                 cmp              verif, 0
+                 je               OPCIONERROR2
+                 ;SOLICITUD DE DATOS
+                 print            msgSteffensen
                  print            ln
+                 print            msgIteraciones
+                 print            ln
+                 getNumero        its
+                 print            ln
+                 print            msgCoefTolerancia
+                 print            ln
+                 getNumero        tols
+                 print            ln
+                 print            msgGradoTolerancia
+                 print            ln
+                 getNumero        grados
+                 print            ln
+                 print            msgLimiteSuperior
+                 print            ln
+                 getNumero        limss
+                 print            ln
+                 print            msgLimiteInferior
+                 print            ln
+                 getNumero        limis
+                 print            ln
+                 ;VERIFICAR SI EL LIM SUP > LIM INF
+                 mov bl, 0
+                 mov cl, 0
+                 mov bl, limis
+                 mov cl, limss
+                 cmp bl, cl
+                 jae ERRORNEWTON
+                 ;X0
+                 cls
+                 print mgsiteracion
+                 printn numiteracion
+                 add bl,cl
+                 mov al,bl
+                 mov ah,0
+                 mov sumatemp, ax
+
+                 fild sumatemp
+                 fstp sumatemp2
+
+                 fld sumatemp2
+                 fdiv dos
+                 fstp x0n
+                 print ln
+                 print msgxn
+                 printDecimal x0n,gradon
+                 print ln
+                 print msgxn1
+                 print ln
                  pausa
                  jmp              MENU
     OPCIONERROR: 
