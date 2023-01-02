@@ -3,7 +3,7 @@ include macros.asm
 .model small
 
 ;segmento de pila
-.stack
+.stack 100H
 
     ;segmento de datos
 .data
@@ -88,6 +88,7 @@ include macros.asm
     constant    db      'C ','$'
     mas         db      '+ ','$'
     menos       db      '- ','$'
+    numerito    db      1
     msgresult   db      'RESULTADO: ','$'
     msgresiduo  db      'RESIDUO: ','$'
     ;METODO DE NEWTON Y STEFFENSEN
@@ -101,6 +102,7 @@ include macros.asm
     tols                db    0
     msgGradoTolerancia db      'Ingrese el grado de tolerancia: ','$'
     gradon             db    0
+    trunc              dw    0CF3h
     grados             db    0
     msgLimiteSuperior  db      'Ingrese el limite superior: ','$'
     limsn              db    0
@@ -110,16 +112,47 @@ include macros.asm
     limis              db    0
     res                db    0
     tmp                db    0
+    dectemp            dq    0.0
+    contnew            db    0
+    msgxn              db      'Xn = ', '$'
+    msgxn1             db      'Xn+1 = ','$'
     tmp1            db    0
-    xinin           db    0
-    dos             db    2
+    xnsig           dq    0.0
+    dos             dq    2.0
+    n1              dw    0
+    n2              dw    0
     contador        db    0
+    xn              dq    0.0
+    entero          dw    0
+    diez            dq    10.0
+    cont            db    0
+    ciclotemp       dq    0.0
     contador1       db    0
     tmp2            db    0
     tmp3            db    0
     tmp4            db    0
     tmp5            db    0
     tmp6            db    0
+    sumatemp        dw    0
+    sumatemp2       dq    0.0
+    x0n             dq    0.0
+    coef_tmp        dw    0
+    coef_tmp2       dq    0.0
+    val5            dq    0.0
+    val4            dq    0.0
+    val3            dq    0.0
+    val2            dq    0.0
+    val1            dq    0.0
+    val0            dq    0.0
+    vald4            dq    0.0
+    vald3            dq    0.0
+    vald2            dq    0.0
+    vald1            dq    0.0
+    vald0            dq    0.0
+    fx               dq    0.0
+    fdx              dq    0.0
+    mgsiteracion    db    'ITERACION #','$'
+    numiteracion    db    1
     msgErrorNewton     db    'ERROR: El limite inferior es mayor que el limite superior','$'
                 textaux label byte
     maxtextaux  db      4
@@ -129,6 +162,8 @@ include macros.asm
     ;segmento de codigo
 .code
 main PROC
+    finit
+    fldcw trunc
     INTRO:       
                  cls
                  print            inicio
@@ -152,7 +187,7 @@ main PROC
                  print            inicio09
                  print            ln
                  print            inicio010
-                 print            ln
+                 print            ln  
                  pausa
                  jmp              MENU
     MENU:        
@@ -461,8 +496,14 @@ main PROC
                  print            ln
                  pausa
                  jmp              MENU
+    ;METODO DE NEWTON
     OPCION6:     
                  cls
+                 ;VERIFICAR SI HAY UNA FUNCION
+                 verificarFuncion coef5, coef4, coef3, coef2, coef1, coef0, verif
+                 cmp              verif, 0
+                 je               OPCIONERROR2
+                 ;SOLICITUD DE DATOS
                  print            msgNewton
                  print            ln
                  print            msgIteraciones
@@ -485,18 +526,36 @@ main PROC
                  print            ln
                  getNumero        limin
                  print            ln
-                 mov al, 0
+                 ;VERIFICAR SI EL LIM SUP > LIM INF
                  mov bl, 0
-                 mov al, limin
-                 mov bl, limsn
-                 cmp al, bl
+                 mov cl, 0
+                 mov bl, limin
+                 mov cl, limsn
+                 cmp bl, cl
                  jae ERRORNEWTON
-                 add al,bl
-                 mov tmp, al
-                 dividir2 tmp,2,xinin, res
-                 print            ln
-                 print            msgresult
-                 imprimirDecimales 2, xinin,res,gradon
+                 ;X0
+                 cls
+                 print mgsiteracion
+                 printn numiteracion
+                 add bl,cl
+                 mov al,bl
+                 mov ah,0
+                 mov sumatemp, ax
+
+                 fild sumatemp
+                 fstp sumatemp2
+
+                 fld sumatemp2
+                 fdiv dos
+                 fstp x0n
+                 print ln
+                 print msgxn
+                 printDecimal x0n,gradon
+                 print ln
+                 print msgxn1
+                 MetodoNewton x0n, xnsig
+                 printDecimal val1, gradon
+                 print ln
                  pausa
                  jmp              MENU
     OPCION7:     

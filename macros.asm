@@ -110,22 +110,10 @@ multiplicar macro coefi, expo, total
 endm
 ;macro para realizar la division
 dividir macro coefi, expo, total
-print prueba
-print ln
             mov al, coefi
-            printn  coefi
-print prueba
-print ln
             mov bl, expo
-            printn expo
-print prueba
-print ln
             div bl
-print prueba
-print ln
             mov total, al
-print prueba
-print ln
             mov ax, 0000h
             mov al, bl
 endm
@@ -418,10 +406,222 @@ imprimirDecimales macro divisor,resultado, residuo, gradodec
               jmp salir2
        salir2:
 endm
-
+;MACRO PARA IMPRIMIR NUMEROS DE 1 DIGITO
 printnum2 macro numeroprint 
        mov dl, numeroprint
        add dl, 30h
        mov ah, 02h
        int 21h
+endm
+
+;MACRO PARA IMPRIMIR NUMEROS DE 16 BITS
+printnumero2 macro numeroprint
+       LOCAL label1, print1, exit
+       MOV AX,@DATA
+       MOV DS,AX
+       mov ax, numeroprint
+       mov cx,0
+       mov dx,0
+       label1:
+       cmp ax,0
+       je print1     
+       mov bx,10       
+       div bx                 
+       push dx             
+       inc cx             
+       xor dx,dx
+       jmp label1
+       print1:
+              cmp cx,0
+              je exit
+              pop dx
+              add dx,48
+              mov ah,02h
+              int 21h
+              dec cx
+              jmp print1
+       exit:
+endm
+;MACRO PARA EL CALCULO DE F(X)
+metodoFx macro num1,num2
+       ;X5
+       mov bx,0
+       mov bl, coef5
+       mov bh, 0
+       mov coef_tmp, bx
+       fild coef_tmp
+       fstp coef_tmp2
+       fld num1
+       fmul num1
+       fmul num1
+       fmul num1
+       fmul num1
+       fmul coef_tmp2
+       fstp val5
+       ;X4
+       mov bx,0
+       mov bl, coef4
+       mov bh, 0
+       mov coef_tmp, bx
+       fild coef_tmp
+       fstp coef_tmp2
+       fld num1
+       fmul num1
+       fmul num1
+       fmul num1
+       fmul coef_tmp2
+       fstp val4
+       ;X3
+       mov bx,0
+       mov bl, coef3
+       mov bh, 0
+       mov coef_tmp, bx
+       fild coef_tmp
+       fstp coef_tmp2
+       fld num1
+       fmul num1
+       fmul num1
+       fmul coef_tmp2
+       fstp val3
+       ;X2
+       mov bx,0
+       mov bl, coef2
+       mov bh, 0
+       mov coef_tmp, bx
+       fild coef_tmp
+       fstp coef_tmp2
+       fld num1
+       fmul num1
+       fmul coef_tmp2
+       fstp val2
+       ;X1
+       mov bx,0
+       mov bl, coef2
+       mov bh, 0
+       mov coef_tmp, bx
+       fild coef_tmp
+       fstp coef_tmp2
+       fld num1
+       fmul coef_tmp2
+       fstp val1
+       ;X0
+       mov bx,0
+       mov bl, coef0
+       mov bh, 0
+       mov coef_tmp, bx
+       fild coef_tmp
+       fstp val0
+       ;SUMA DE TODO
+       fld val5
+       fadd val4
+       fadd val3
+       fadd val2
+       fadd val1
+       fadd val0
+       fstp num2
+endm
+;MACRO PARA EL CALCULO DE F'(X)
+metodoDFx macro num1,num2
+       ;X4
+       mov bx,0
+       mov bl, der5
+       mov bh, 0
+       mov coef_tmp, bx
+       fild coef_tmp
+       fstp coef_tmp2
+       fld num1
+       fmul num1
+       fmul num1
+       fmul num1
+       fmul coef_tmp2
+       fstp vald4
+       ;X3
+       mov bx,0
+       mov bl, der4
+       mov bh, 0
+       mov coef_tmp, bx
+       fild coef_tmp
+       fstp coef_tmp2
+       fld num1
+       fmul num1
+       fmul num1
+       fmul coef_tmp2
+       fstp vald3
+       ;X2
+       mov bx,0
+       mov bl, der3
+       mov bh, 0
+       mov coef_tmp, bx
+       fild coef_tmp
+       fstp coef_tmp2
+       fld num1
+       fmul num1
+       fmul coef_tmp2
+       fstp vald2
+       ;X1
+       mov bx,0
+       mov bl, der2
+       mov bh, 0
+       mov coef_tmp, bx
+       fild coef_tmp
+       fstp coef_tmp2
+       fld num1
+       fmul coef_tmp2
+       fstp vald1
+       ;X0
+       mov bx,0
+       mov bl, der1
+       mov bh, 0
+       mov coef_tmp, bx
+       fild coef_tmp
+       fstp vald0
+       ;SUMA DE TODO
+       fld vald4
+       fadd vald3
+       fadd vald2
+       fadd vald1
+       fadd vald0
+       fstp num2
+endm
+;MACRO PARA EL METODO DE NEWTON DEL CALCULO DE XN+1
+MetodoNewton macro inicio, siguiente
+       metodoFx inicio, fx
+       metodoDFx inicio, fdx
+       fld fx
+       fdiv fdx
+       fsub inicio
+       fstp siguiente
+endm
+;MACRO PARA IMPRIMIR UN DECIMAL
+printDecimal macro numerodec,gradodec
+       LOCAL ciclo, salir
+       fld numerodec
+       frndint
+       fistp entero
+       printnumero2 entero
+       print punto
+       mov cont,0
+       fld numerodec
+       fstp dectemp
+       jmp ciclo
+       ciclo:
+              mov al, cont
+              cmp al, gradodec
+              je salir
+              ;RESTA EL ENTERO CON LOS DECIMALES
+              fld dectemp
+              fisub entero
+              fstp dectemp
+              ;MULTIPLICA CON 10
+              fld dectemp
+              fmul diez
+              fst dectemp
+              ;truca decimales
+              frndint
+              fistp entero
+              ;imprime el decimal
+              printnumero2 entero
+              inc cont
+              jmp ciclo
+       salir:
 endm
